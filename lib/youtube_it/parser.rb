@@ -64,7 +64,9 @@ class YouTubeIt
             :url       => entry.at("id").text,
             :reply_to  => parse_reply(entry),
             :channel_id => (entry.at("yt|channelId").text rescue nil),
-            :gp_user_id => (entry.at("yt|googlePlusUserId").text rescue nil)
+            :gp_user_id => (entry.at("yt|googlePlusUserId").text rescue nil),
+            :reply_count => (entry.at("yt|replyCount").text rescue nil),
+            :activity_id => entry.at("id").text.split(':').last
           )
         end
 
@@ -343,7 +345,7 @@ class YouTubeIt
         end.reduce({},:merge)
       end
     end
-    
+
     class SubscriptionFeedParser < FeedParser #:nodoc:
 
       def parse_content(content)
@@ -608,7 +610,7 @@ class YouTubeIt
         end.reduce({},:merge)
       end
     end
-    
+
     class VideosFeedParser < VideoFeedParser #:nodoc:
 
     private
