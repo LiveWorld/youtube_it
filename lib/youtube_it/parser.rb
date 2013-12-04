@@ -41,7 +41,7 @@ class YouTubeIt
       def parse_content(content)
         doc = Nokogiri::XML(content.body)
         feed = doc.at("feed")
-
+#         Rails.logger.debug("doc: #{doc.inspect}")
         comments = []
         feed.css("entry").each do |entry|
           comments << parse_entry(entry)
@@ -65,7 +65,7 @@ class YouTubeIt
             :reply_to  => parse_reply(entry),
             :channel_id => (entry.at("yt|channelId").text rescue nil),
             :gp_user_id => (entry.at("yt|googlePlusUserId").text rescue nil),
-            :reply_count => (entry.at("yt|replyCount").text rescue nil),
+            :reply_count => (entry.at("yt|replyCount").children.text rescue nil),
             :activity_id => entry.at("id").text.split(':').last
           )
         end
