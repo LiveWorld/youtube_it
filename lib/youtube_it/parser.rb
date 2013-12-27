@@ -41,16 +41,17 @@ class YouTubeIt
       def parse_content(content)
         doc = Nokogiri::XML(content.body)
         feed = doc.at("feed")
-#         Rails.logger.debug("doc: #{doc.inspect}")
+        next_page = feed.at_xpath("xmlns:link[@rel='next']")["href"] rescue nil
+        start_token = parse_start_token(next_page) unless next_page.nil?
         comments = []
         feed.css("entry").each do |entry|
-          comments << parse_entry(entry)
+          comments << parse_entry(entry, start_token)
         end
         return comments
       end
 
       protected
-        def parse_entry(entry)
+        def parse_entry(entry, start_token)
           author = YouTubeIt::Model::Author.new(
             :name => (entry.at("author/name").text rescue nil),
             :uri  => (entry.at("author/uri").text rescue nil)
@@ -66,8 +67,15 @@ class YouTubeIt
             :channel_id => (entry.at("yt|channelId").text rescue nil),
             :gp_user_id => (entry.at("yt|googlePlusUserId").text rescue nil),
             :reply_count => (entry.at("yt|replyCount").children.text rescue nil),
-            :activity_id => entry.at("id").text.split(':').last
+            :activity_id => entry.at("id").text.split(':').last,
+            :start_token => start_token
           )
+        end
+
+        def parse_start_token(next_page)
+          query = next_page.split('?').last
+          match = /start-token=([^&]+)/.match(query)
+          match[1] if match
         end
 
         def parse_reply(entry)
