@@ -240,7 +240,6 @@ class YouTubeIt
         comment_id = comment_id.unique_id if comment_id.is_a? YouTubeIt::Model::Comment
         url  = "/feeds/api/videos/%s/comments/%s" % [video_id, comment_id]
         response     = yt_session('https://gdata.youtube.com').delete(url)
-
         return response.status == 200
       end
 
@@ -519,7 +518,7 @@ class YouTubeIt
       end
 
       def base_url
-        "http://youtube.scms.liveworld.com"
+        "https://youtube.scms.liveworld.com"
       end
 
       def boundary
