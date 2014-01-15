@@ -51,7 +51,7 @@ class YouTubeIt
       end
 
       protected
-        def parse_entry(entry, start_token)
+        def parse_entry(entry, start_token = nil)
           author = YouTubeIt::Model::Author.new(
             :name => (entry.at("author/name").text rescue nil),
             :uri  => (entry.at("author/uri").text rescue nil)
