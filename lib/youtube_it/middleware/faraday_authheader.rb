@@ -13,7 +13,7 @@ module FaradayMiddleware
       unless req_headers.include?("Content-Length")
         req_headers.merge!("Content-Length"  => env[:body] ? "#{env[:body].length}" : "0")
       end
-      Rails.logger.debug "***********\n\nENV is #{env.inspect}\n\n*************"
+#       Rails.logger.debug "***********\n\nENV is #{env.inspect}\n\n*************"
 
       @app.call(env)
     end
