@@ -518,7 +518,8 @@ class YouTubeIt
       end
 
       def base_url
-        "http://youtube.scms.liveworld.com"
+#         "http://youtube.scms.liveworld.com"
+        "http://gdata.youtube.com"
       end
 
       def base_url_https
