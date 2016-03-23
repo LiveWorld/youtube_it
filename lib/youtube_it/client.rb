@@ -506,8 +506,7 @@ class YouTubeIt
 
     def refresh_access_token!
       new_access_token = access_token.refresh!
-      require 'thread' unless Thread.respond_to?(:exclusive)
-      Thread.exclusive do
+      Mutex.new.synchronize do
         @access_token = new_access_token
         @client = nil
       end
