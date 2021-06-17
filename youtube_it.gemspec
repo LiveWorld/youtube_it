@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/kylejginavan/youtube_it"
 
   s.add_runtime_dependency("nokogiri")
-  s.add_runtime_dependency("oauth", "~> 0.4.4")
+  s.add_runtime_dependency("oauth", ">= 0.5.5")
   s.add_runtime_dependency("oauth2")
   s.add_runtime_dependency("simple_oauth", ">= 0.1.5")
   s.add_runtime_dependency("faraday")
